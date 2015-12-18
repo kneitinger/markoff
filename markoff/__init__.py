@@ -27,8 +27,6 @@ class Markov(object):
             for line in text.split('\n'):
                 self.add_vocab(line,False)
 
-
-
     def add_vocab(self,text,write_to_file=True):
         """
         Adds word pairings from 'text' into markoff's memory
@@ -66,6 +64,9 @@ class Markov(object):
         return self._chainmap[word][index]
 
     def _split_punct(self,word):
+        """
+        Splits puntuated words into seperate tokens
+        """
         result = []
         for p in PUNCT:
             ind = word.find(p)
@@ -75,7 +76,6 @@ class Markov(object):
                 return result
         result.append(word)
         return result
-
 
     def gen_sentence(self,max_length=None):
         """
