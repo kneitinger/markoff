@@ -15,10 +15,14 @@ config = {
     'name': 'markoff'
     'license' : 'MIT',
     'classifiers' : [
-        'Programming Language :: Python',
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
+        'Natural Language :: English',
         'Operating System :: OS Independent',
-    ],
+        'Topic :: Text Processing :: Linguistic'
+    ]
 }
 
 setup(**config)
