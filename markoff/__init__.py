@@ -15,7 +15,7 @@ class Markoff(object):
         if type(path) != str and path != None:
             raise TypeError('path must be a string if provided')
 
-        self._chainmap = {'':[]}
+        self._chainmap = {}
         self._excluded_words = []
         self._path = path
         self._start = start_token
