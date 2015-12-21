@@ -12,8 +12,8 @@ config = {
     'install_requires': ['nose'],
     'packages': ['markoff','tests'],
     'scripts': [],
-    'name': 'markoff'
-    'license' : 'MIT',
+    'name': 'markoff',
+    'license' : 'BSD',
     'classifiers' : [
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
