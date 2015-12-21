@@ -28,7 +28,7 @@ class Markoff(object):
                 for line in text.split('\n'):
                     self.add_vocab(line,False)
             except IOError:
-                print('The file does not exist, creating it now.')
+                print('\'' + self._file + '\' does not exist, creating it now.')
                 f = open(self._path,'w')
             finally:
                 f.close()
