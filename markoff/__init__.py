@@ -22,10 +22,16 @@ class Markoff(object):
         self._end = end_token
 
         if self._path:
-            with open(self._path) as f:
+            try:
+                f = open(self._path)
                 text = f.read()
-            for line in text.split('\n'):
-                self.add_vocab(line,False)
+                for line in text.split('\n'):
+                    self.add_vocab(line,False)
+            except IOError:
+                print('The file does not exist, creating it now.')
+                f = open(self._path,'w')
+            finally:
+                f.close()
 
     def add_vocab(self,text,write_to_file=True):
         """
