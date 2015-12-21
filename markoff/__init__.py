@@ -4,7 +4,7 @@ START='_START_'
 END='_END_'
 PUNCT=['.',',',';',':','?','!']
 
-class Markov(object):
+class Markoff(object):
 
     def __init__(self,path=None,start_token=START,end_token=END):
         """
