@@ -1,4 +1,5 @@
 import random
+import codecs
 
 START='_START_'
 END='_END_'
@@ -23,13 +24,13 @@ class Markoff(object):
 
         if self._path:
             try:
-                f = open(self._path)
+                f = codecs.open(self._path,'r','utf-8')
                 text = f.read()
                 for line in text.split('\n'):
                     self.add_vocab(line,False)
             except IOError:
                 print('\'' + self._file + '\' does not exist, creating it now.')
-                f = open(self._path,'w')
+                f = codecs.open(self._path,'w','utf-8')
             finally:
                 f.close()
 
@@ -41,8 +42,9 @@ class Markoff(object):
             raise TypeError('text must be a string')
 
         if self._path and write_to_file:
-            with open(self._path,'a') as f:
-                f.write(text+'\n')
+            with codecs.open(self._path,'a','utf-8') as f:
+                f.write(text)
+                f.write('\n')
 
         prev_word = self._start
 
