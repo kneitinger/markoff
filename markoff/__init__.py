@@ -92,15 +92,15 @@ class Markoff(object):
 
         while not satisfactory:
             word=self._nextWord(self._start)
-            response = ''
+            msg = ''
              
             while word != self._end:
                 # Add space before all mid-sentence words
-                if len(response) != 0 and not word in PUNCT:
-                    response += ' '
-                response += word
+                if len(msg) != 0 and not word in PUNCT:
+                    msg += ' '
+                msg += word
                 word = self._nextWord(word)
-            if not max_length or len(response) <= max_length:
+            if len(msg) > 0 and not max_length or len(msg) <= max_length:
                 satisfactory = True
 
-        return response
+        return msg
