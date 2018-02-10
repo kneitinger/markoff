@@ -1,19 +1,20 @@
 import random
 import codecs
 
-START='_START_'
-END='_END_'
-PUNCT=['.',',',';',':','?','!']
+START = '_~_START_~_'
+END = '_~_END_~_'
+PUNCT = ['.', ',', ';', ':', '?', '!']
+
 
 class Markoff(object):
 
-    def __init__(self,path=None,start_token=START,end_token=END):
+    def __init__(self, path=None, start_token=START, end_token=END):
         """
         path: A string, indicating the phrase file to read from and write to
         start_token: A string, used internally for denoting the start of phrases
         end_token: A string, used internally for denoting the end of phrases
         """
-        if type(path) != str and path != None:
+        if type(path) != str and path is not None:
             raise TypeError('path must be a string if provided')
 
         self._chainmap = {}
@@ -24,17 +25,17 @@ class Markoff(object):
 
         if self._path:
             try:
-                f = codecs.open(self._path,'r','utf-8')
+                f = codecs.open(self._path, 'r', 'utf-8')
                 text = f.read()
                 for line in text.split('\n'):
-                    self.add_vocab(line,False)
+                    self.add_vocab(line, False)
             except IOError:
                 print('\'' + self._file + '\' does not exist, creating it now.')
-                f = codecs.open(self._path,'w','utf-8')
+                f = codecs.open(self._path, 'w', 'utf-8')
             finally:
                 f.close()
 
-    def add_vocab(self,text,write_to_file=True):
+    def add_vocab(self, text, write_to_file=True):
         """
         Adds word pairings from 'text' into markoff's memory
         """
@@ -42,14 +43,14 @@ class Markoff(object):
             raise TypeError('text must be a string')
 
         if self._path and write_to_file:
-            with codecs.open(self._path,'a','utf-8') as f:
+            with codecs.open(self._path, 'a', 'utf-8') as f:
                 f.write(text)
                 f.write('\n')
 
         prev_word = self._start
 
         for word in text.split():
-            for token in self._split_punct(word): 
+            for token in self._split_punct(word):
                 try:
                     self._chainmap[prev_word].append(token)
                     if prev_word == '.':
@@ -57,21 +58,21 @@ class Markoff(object):
                 except Exception:
                     self._chainmap[prev_word] = [token]
 
-                prev_word=token
+                prev_word = token
 
         try:
             self._chainmap[prev_word].append(self._end)
         except Exception:
             self._chainmap[prev_word] = [self._end]
-        
-    def _nextWord(self,word):
+
+    def _nextWord(self, word):
         """
         Probablistically calculates next word
         """
-        index = random.randint(0,len(self._chainmap[word])-1)
+        index = random.randint(0, len(self._chainmap[word])-1)
         return self._chainmap[word][index]
 
-    def _split_punct(self,word):
+    def _split_punct(self, word):
         """
         Splits puntuated words into seperate tokens
         """
@@ -85,7 +86,7 @@ class Markoff(object):
         result.append(word)
         return result
 
-    def gen_sentence(self,max_length=None):
+    def gen_sentence(self, max_length=None):
         """
         Generates a gen_sentence.  If max_length is provided, it generates a
         new gen_sentence until it is within length constraints
@@ -93,12 +94,12 @@ class Markoff(object):
         satisfactory = False
 
         while not satisfactory:
-            word=self._nextWord(self._start)
+            word = self._nextWord(self._start)
             msg = ''
-             
+
             while word != self._end:
                 # Add space before all mid-sentence words
-                if len(msg) != 0 and not word in PUNCT:
+                if len(msg) != 0 and word not in PUNCT:
                     msg += ' '
                 msg += word
                 word = self._nextWord(word)
